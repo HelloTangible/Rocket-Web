@@ -2,6 +2,7 @@ import { EventEmitter } from 'events'
 import { isTokenExpired } from './jwtHelper'
 import Auth0Lock from 'auth0-lock'
 import { browserHistory } from 'react-router'
+import Axios from 'axios'
 
 const localStorage = window.localStorage
 
@@ -34,6 +35,21 @@ export default class AuthService extends EventEmitter {
         console.log('Error loading the Profile', error)
       } else {
         this.setProfile(profile)
+
+        // If this is a new user, save them to our internal DB
+        Axios.get(`http://${__ROCKET_API_HOST__}/api/users/${profile.user_id}`).then((res) => {
+          console.log(res)
+        }).catch(() => {
+          let user = {
+            user_id: profile.user_id,
+            email: profile.email,
+            picture: profile.picture,
+            email_verified: profile.email_verified,
+            name: profile.name
+          }
+
+          Axios.post(`http://${__ROCKET_API_HOST__}/api/users`, user)
+        })
       }
     })
   }
@@ -48,7 +64,7 @@ export default class AuthService extends EventEmitter {
     this.lock.show()
   }
 
-  loggedIn (){
+  loggedIn () {
     // Checks if there is a saved token and it's still valid
     const token = this.getToken()
     return !!token && !isTokenExpired(token)
