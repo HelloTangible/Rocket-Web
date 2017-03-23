@@ -4,9 +4,9 @@ import { render } from 'react-dom'
 import 'bootstrap/dist/css/bootstrap.css'
 import './app.css'
 
-import App from 'containers/App/App'
+import App from 'components/App/App'
 
-import {browserHistory} from 'react-router'
+import { browserHistory } from 'react-router'
 import makeRoutes from './routes'
 
 const routes = makeRoutes()

@@ -10,6 +10,7 @@ const getConfig = require('hjs-webpack')
 
 const isDev = NODE_ENV === 'development'
 const isTest = NODE_ENV === 'test'
+const DEBUG = !process.argv.includes('--release')
 
 const root = resolve(__dirname)
 const src = join(root, 'src')
@@ -23,11 +24,11 @@ var config = getConfig({
   html: function (context) {
     return {
       'index.html': context.defaultTemplate({
-        title: 'auth0 React Sample',
+        title: 'Rocket, by Tangible',
         publicPath: isDev ? 'http://localhost:3000/' : '',
         meta: {
-          'name': 'auth0 React Sample',
-          'description': 'A minimal reactJS sample application showing auth0 integration'
+          'name': 'Rocket, by Tangible',
+          'description': 'Web app for Rocket simulation services'
         }
       })
     }
@@ -77,6 +78,7 @@ const newloader = Object.assign({}, cssloader, {
   loader: cssloader.loader.replace(matchCssLoaders, `$1$2?modules&localIdentName=${cssModulesNames}$3`)
 })
 config.module.loaders.push(newloader)
+
 cssloader.test = new RegExp(`^(?!.*(module|bootstrap)).*${cssloader.test.source}`)
 cssloader.loader = newloader.loader
 
@@ -84,6 +86,33 @@ config.module.loaders.push({
   test: /bootstrap\.css$/,
   include: [modules],
   loader: 'style-loader!css-loader'
+})
+
+config.module.loaders.push({
+  test: /\.scss$/,
+  loaders: [
+    'isomorphic-style-loader',
+    `css-loader?${JSON.stringify({ sourceMap: DEBUG, minimize: !DEBUG })}`,
+    'postcss-loader?pack=sass',
+    'sass-loader'
+  ]
+})
+
+/* config.module.loaders.push({
+  test: /\.(png|jpg|jpeg|gif|svg|woff|woff2)$/,
+  loader: 'url-loader',
+  query: {
+    name: DEBUG ? '[path][name].[ext]?[hash]' : '[hash].[ext]',
+    limit: 10000
+  }
+}) */
+
+config.module.loaders.push({
+  test: /\.(eot|ttf|wav|mp3)$/,
+  loader: 'file-loader',
+  query: {
+    name: DEBUG ? '[path][name].[ext]?[hash]' : '[hash].[ext]',
+  }
 })
 
 // postcss
@@ -98,7 +127,7 @@ config.postcss = [].concat([
 config.resolve.root = [src, modules]
 config.resolve.alias = {
   'css': join(src, 'styles'),
-  'containers': join(src, 'containers'),
+  'components': join(src, 'components'),
   'components': join(src, 'components'),
   'utils': join(src, 'utils'),
 

@@ -1,10 +1,25 @@
 import React, { PropTypes as T } from 'react'
 import { Jumbotron } from 'react-bootstrap'
 import styles from './styles.module.css'
+import Rocket from '../../styles/images/rocket-white.png'
+
+import { IntlProvider, addLocaleData } from 'react-intl'
+import englishMessages from '../../../languages/en.json'
+import en from 'react-intl/locale-data/en'
+
+addLocaleData([...en]);
 
 export class Container extends React.Component {
   static contextTypes = {
     router: T.object
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      lang: 'en',
+      message: englishMessages,
+    };
   }
 
   render() {
@@ -16,14 +31,11 @@ export class Container extends React.Component {
     }
 
     return (
-      <Jumbotron>
-        <h2 className={styles.mainTitle}>
-          <img src="https://cdn.auth0.com/styleguide/1.0.0/img/badge.svg" />
-        </h2>
+      <IntlProvider locale={this.state.lang} messages={this.state.message}>
         {children}
-      </Jumbotron>
+      </IntlProvider>
     )
   }
 }
 
-export default Container;
+export default Container

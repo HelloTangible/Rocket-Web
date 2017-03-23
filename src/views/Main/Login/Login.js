@@ -1,11 +1,16 @@
 import React, { PropTypes as T } from 'react'
-import {ButtonToolbar, Button} from 'react-bootstrap'
+import {ButtonToolbar, FormGroup, FormControl, Button} from 'react-bootstrap'
 import AuthService from 'utils/AuthService'
-import styles from './styles.module.css'
+import Rocket from '../../../styles/images/rocket-white.png'
+import s from './Login.css'
 
 export class Login extends React.Component {
   static contextTypes = {
     router: T.object
+  }
+
+  constructor(props) {
+    super(props)
   }
 
   static propTypes = {
@@ -13,14 +18,27 @@ export class Login extends React.Component {
     auth: T.instanceOf(AuthService)
   }
 
+  componentWillMount() {
+    document.title = 'Rocket - Login'
+  }
+
   render() {
     const { auth } = this.props
     return (
-      <div className={styles.root}>
-        <h2>Login</h2>
-        <ButtonToolbar className={styles.toolbar}>
-          <Button bsStyle="primary" onClick={auth.login.bind(this)}>Login</Button>
-        </ButtonToolbar>
+      <div className={`login-page animate ${s.loginPage}`}>
+        <div className="row">
+          <div className="col-md-4 col-lg-4 col-md-offset-4 col-lg-offset-4">
+            <img src={Rocket} alt="rocket" className="user-avatar" />
+            <h1>Rocket, by Tangible </h1>
+            <br />
+            <button
+              type="submit"
+              className={`btn btn-white btn-outline btn-lg btn-rounded progress-login
+                progress-button ${s.btn}`} onClick={auth.login.bind(this)}
+              data-style="fill" data-horizontal
+            >Log in</button>
+          </div>
+        </div>
       </div>
     )
   }

@@ -1,5 +1,5 @@
-import React, { PropTypes } from 'react';
-import { Router } from 'react-router';
+import React, { PropTypes } from 'react'
+import { Router } from 'react-router'
 
 class App extends React.Component {
   static contextTypes = {

@@ -35,21 +35,7 @@ export default class AuthService extends EventEmitter {
         console.log('Error loading the Profile', error)
       } else {
         this.setProfile(profile)
-
-        // If this is a new user, save them to our internal DB
-        Axios.get(`http://${__ROCKET_API_HOST__}/api/users/${profile.user_id}`).then((res) => {
-          console.log(res)
-        }).catch(() => {
-          let user = {
-            user_id: profile.user_id,
-            email: profile.email,
-            picture: profile.picture,
-            email_verified: profile.email_verified,
-            name: profile.name
-          }
-
-          Axios.post(`http://${__ROCKET_API_HOST__}/api/users`, user)
-        })
+        this.saveIfNew(profile)
       }
     })
   }
@@ -81,6 +67,23 @@ export default class AuthService extends EventEmitter {
     // Retrieves the profile data from localStorage
     const profile = localStorage.getItem('profile')
     return profile ? JSON.parse(localStorage.profile) : {}
+  }
+
+  saveIfNew (profile) {
+    // If this is a new user, save them to our internal DB
+    Axios.get(`http://${__ROCKET_API_HOST__}/api/users/${profile.user_id}`).then((res) => {
+      console.log(res)
+    }).catch(() => {
+      let user = {
+        user_id: profile.user_id,
+        email: profile.email,
+        picture: profile.picture,
+        email_verified: profile.email_verified,
+        name: profile.name
+      }
+
+      Axios.post(`http://${__ROCKET_API_HOST__}/api/users`, user)
+    })
   }
 
   setToken (idToken) {

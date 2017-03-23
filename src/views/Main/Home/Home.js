@@ -1,11 +1,18 @@
 import React, { PropTypes as T } from 'react'
-import {Button} from 'react-bootstrap'
+import { Button, Panel } from 'react-bootstrap'
 import AuthService from 'utils/AuthService'
-import styles from './styles.module.css'
+import { FormattedMessage } from 'react-intl'
+import Header from '../../../components/Header';
+import Sidebar from '../../../components/Sidebar';
+import s from './Home.css'
 
 export class Home extends React.Component {
   static contextTypes = {
     router: T.object
+  }
+
+  componentWillMount() {
+    document.title = 'Rocket - Dashboard'
   }
 
   static propTypes = {
@@ -30,7 +37,9 @@ export class Home extends React.Component {
   render(){
     const { profile } = this.state
     return (
-      <div className={styles.root}>
+      <div className={`dashboard-page ${s.dashboardPage}`}>
+        <Header profile={profile} auth={this.props.auth} />
+        <Sidebar profile={profile} />
         <h2>Home</h2>
         <p>Welcome {profile.name}!</p>
         <Button onClick={this.logout.bind(this)}>Logout</Button>
