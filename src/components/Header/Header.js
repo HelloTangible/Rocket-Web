@@ -16,26 +16,18 @@ import $ from 'jquery';
 import AuthService from '../../utils/AuthService'
 
 class TopNav extends Component{
-  static contextTypes = {
-    setLang: PropTypes.func.isRequired,
-  }
-
   static propTypes = {
     auth: PropTypes.instanceOf(AuthService)
   }
 
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
-      rtlClass: true
+      rtlClass: true,
+      profile: this.props.auth.getProfile()
     }
     this.showMenu = this.showMenu.bind(this);
   }
-
-  // componentWillMount() {
-  //   console.log(this.context);
-  //   // this.context.setTitle(title);
-  // }
 
   render() {
     return (
@@ -186,8 +178,8 @@ class TopNav extends Component{
           <ul className={"nav navbar-nav pull-right navbar-right " + s.pullRight + " " + s.ulNavbar}>
 
             <NavDropdown id="dropDown4" className={s.navbarProfile} eventKey={4} title={<span>
-              <img src={require("../../common/images/flat-avatar.png")} className={" " + s.topnavImg} alt="profile picture" />
-              <span className="hidden-sm">Ani Pascal</span>
+              <img src={this.state.profile.picture} className={" " + s.topnavImg} alt="profile picture" />
+              <span className="hidden-sm">{this.state.profile.name}</span>
               </span>} noCaret
             >
                 <MenuItem onClick={(e) => { e.preventDefault(); history.push('/dashboard/profile') }}>
@@ -228,29 +220,6 @@ class TopNav extends Component{
     );
   }
 
-  rightToLeft() {
-    this.setState({'rtlClass': !this.state.rtlClass});
-    if (this.state.rtlClass) {
-      $('body').addClass('rtl');
-    } else {
-      $('body').removeClass('rtl');
-    }
-  }
-
-  changeLanguage(e) {
-    // add code related to language change through app store
-    window.localStorage.setItem("language123", e);
-    this.context.setLang(e);
-    // localForage.setItem('lang', e)
-    //   .then((success) => {
-    //     console.log('local storage is set', success);
-    //     this.context.setLang(e);
-    //   })
-    //   .catch((err) => {
-    //     console.log('error while storing lang', err);
-    //   })
-  }
-
   showMenu()
   {
     $('.dashboard-page').toggleClass('push-right');
@@ -258,4 +227,4 @@ class TopNav extends Component{
 }
 
 
-export default withStyles(s)(TopNav);
+export default withStyles(s)(TopNav)

@@ -23,7 +23,7 @@ export default [{
     const component = await next()
     if (component === undefined) return component
     return render(
-      <App context={context} header={true}>{component}</App> // eslint-disable-line
+      <App context={context} header={true}>{component}</App>
     )
   }
 },

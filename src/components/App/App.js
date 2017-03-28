@@ -28,7 +28,7 @@ class App extends Component {
       insertCss: PropTypes.func,
       setTitle: PropTypes.func,
       setMeta: PropTypes.func,
-      setLang: PropTypes.func,
+      getProfile: PropTypes.func
     }),
     children: PropTypes.element.isRequired,
     error: PropTypes.object,
@@ -38,14 +38,14 @@ class App extends Component {
     insertCss: PropTypes.func.isRequired,
     setTitle: PropTypes.func.isRequired,
     setMeta: PropTypes.func.isRequired,
-    setLang: PropTypes.func,
+    getProfile: PropTypes.func
   };
 
   constructor(props) {
     super(props);
     this.state = {
       lang: 'en',
-      message: englishMessages,
+      message: englishMessages
     }
   }
 
@@ -55,13 +55,7 @@ class App extends Component {
       insertCss: context.insertCss || emptyFunction,
       setTitle: context.setTitle || emptyFunction,
       setMeta: context.setMeta || emptyFunction,
-      setLang: lang => {
-        let textMessage = langMessage[lang]
-        this.setState({
-          lang,
-          message: textMessage
-        })
-      }
+      getProfile: auth.getProfile
     }
   }
 
@@ -73,14 +67,6 @@ class App extends Component {
 
   componentDidMount() {
     window.scrollTo(0,0)
-    let setLang = window.localStorage.getItem("language123")
-    if (!setLang) {
-        setLang = 'en'
-    }
-    this.setState({
-      lang: setLang,
-      message: langMessage[setLang],
-    })
   }
 
   componentWillUpdate() {
@@ -100,7 +86,7 @@ class App extends Component {
             <IntlProvider locale={this.state.lang} messages={this.state.message}>
               <div className={`dashboard-page ${s.dashboardPage}`}>
                 <Header auth={auth} />
-                <Sidebar />
+                <Sidebar auth={auth} />
                 <section id={s.bodyContainer} className={s.uiView}>
                   {this.props.children}
                 </section>

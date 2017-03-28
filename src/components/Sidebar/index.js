@@ -1,22 +1,25 @@
-import React, { Component } from 'react';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
-var GeminiScrollbar = require('react-gemini-scrollbar');
-import s from './Sidebar.css';
-import SidebarWidgets from './SidebarWidgets';
-import MenuBar from './MenuBar/MenuBar';
+import React, { Component, PropTypes } from 'react'
+import withStyles from 'isomorphic-style-loader/lib/withStyles'
+import s from './Sidebar.css'
+import SidebarWidgets from './SidebarWidgets'
+import AuthService from '../../utils/AuthService'
+import MenuBar from './MenuBar/MenuBar'
 
 class Sidebar extends Component {
-
-  render() {
+  static propTypes = {
+    auth: PropTypes.instanceOf(AuthService)
+  }
+  
+  render () {
     return (
       <aside className={s.sidebar}>
         <div className={'sidenav-outer ' + s.sidenavOuter}>
           <MenuBar />
-          <SidebarWidgets />
+          <SidebarWidgets auth={this.props.auth} />
         </div>
       </aside>
     );
   }
 }
 
-export default withStyles(s)(Sidebar);
+export default withStyles(s)(Sidebar)

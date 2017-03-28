@@ -70,6 +70,8 @@ export default class AuthService extends EventEmitter {
   }
 
   getProfile () {
+    if (typeof localStorage === 'undefined') return
+
     const profile = localStorage.getItem('profile')
     return profile ? JSON.parse(localStorage.profile) : {}
   }

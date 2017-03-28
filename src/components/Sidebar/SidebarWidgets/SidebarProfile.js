@@ -1,26 +1,39 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import withStyles from 'isomorphic-style-loader/lib/withStyles'
 import s from './SidebarWidgets.css'
 import Link from '../../Link'
-import profilePicture from '../../../common/images/flat-avatar.png'
 
-class SidebarNewsFeed extends Component {
+import AuthService from '../../../utils/AuthService'
+
+class SidebarProfile extends Component {
+  static propTypes = {
+    auth: PropTypes.instanceOf(AuthService)
+  }
+
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      profile: this.props.auth.getProfile()
+    }
+  }
+  
   render () {
     return (
-      <div className="text-center">
-        <Link to="/dashboard/profile">
+      <div className='text-center'>
+        <Link to='/dashboard/profile'>
           <img
-            src={profilePicture}
+            src={this.state.profile.picture}
             className={`user-avatar ${s.userAvatar}`}
-            alt="user profile"
+            alt='user profile'
           />
         </Link>
         <div className={`text-center ${s.avatarName}`}>
-          Ani Pascal
+          {this.state.profile.name}
         </div>
       </div>
     )
   }
 }
 
-export default withStyles(s)(SidebarNewsFeed)
+export default withStyles(s)(SidebarProfile)

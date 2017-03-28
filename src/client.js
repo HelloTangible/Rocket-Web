@@ -11,7 +11,12 @@ import {
   removeEventListener,
   windowScrollX,
   windowScrollY,
-} from './core/DOMUtils';
+} from './core/DOMUtils'
+
+import AuthService from './utils/AuthService'
+const envGlobal = __PARSED__
+
+const auth = new AuthService(envGlobal.AUTH0_CLIENT_ID, envGlobal.AUTH0_DOMAIN)
 
 const context = {
   insertCss: (...styles) => {
@@ -37,6 +42,7 @@ const context = {
       .getElementsByTagName('head')[0]
       .appendChild(meta);
   },
+  getProfile: auth.getProfile
 };
 
 // Restore the scroll position if it was saved into the state
