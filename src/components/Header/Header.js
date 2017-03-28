@@ -22,11 +22,16 @@ class TopNav extends Component{
 
   constructor (props) {
     super(props)
+    this.showMenu = this.showMenu.bind(this);
+  }
+
+  componentWillMount() {
+    const prof = this.props.auth.getProfile()
+
     this.state = {
       rtlClass: true,
-      profile: this.props.auth.getProfile()
+      profile: prof ? prof : {} 
     }
-    this.showMenu = this.showMenu.bind(this);
   }
 
   render() {
@@ -199,7 +204,7 @@ class TopNav extends Component{
         </div>
         <ul className={"nav navbar-nav pull-right" + s.ulNavbar + " " + s.hidd}>
           <NavDropdown id="navDropDown11" eventKey={4} title={<span>
-              <img src={require("../../common/images/flat-avatar.png")} className={`topnav-img ${s.topnavImg}`} alt="" />
+              <img src={this.state.profile.picture} className={`topnav-img ${s.topnavImg}`} alt="" />
               </span>} noCaret className={`dropdown admin-dropdown ${s.dropdown}`}
             >
               <MenuItem onClick={(e) => { e.preventDefault(); history.push('/dashboard/profile') }}>

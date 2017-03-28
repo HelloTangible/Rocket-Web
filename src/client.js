@@ -10,7 +10,7 @@ import {
   addEventListener,
   removeEventListener,
   windowScrollX,
-  windowScrollY,
+  windowScrollY
 } from './core/DOMUtils'
 
 import AuthService from './utils/AuthService'
@@ -20,10 +20,10 @@ const auth = new AuthService(envGlobal.AUTH0_CLIENT_ID, envGlobal.AUTH0_DOMAIN)
 
 const context = {
   insertCss: (...styles) => {
-    const removeCss = styles.map(style => style._insertCss()); // eslint-disable-line no-underscore-dangle, max-len
+    const removeCss = styles.map(style => style._insertCss())
     return () => {
-      removeCss.forEach(f => f());
-    };
+      removeCss.forEach(f => f())
+    }
   },
   setTitle: value => (document.title = value),
   setMeta: (name, content) => {
@@ -109,7 +109,7 @@ function run() {
       saveState(currentLocation.key, {
         ...readState(currentLocation.key),
         scrollX: windowScrollX(),
-        scrollY: windowScrollY(),
+        scrollY: windowScrollY()
       });
     }
     currentLocation = location;

@@ -6,7 +6,7 @@ const envGlobal = __PARSED__
 const auth = new AuthService(envGlobal.AUTH0_CLIENT_ID, envGlobal.AUTH0_DOMAIN)
 
 export default {
-  path: '/',
+  path: ['/', '/home'],
   async action () {
     const Home = await new Promise((resolve) => {
       require.ensure([], (require) => {

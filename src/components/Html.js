@@ -1,7 +1,7 @@
-import React, { PropTypes } from 'react';
-import { analytics } from '../config';
+import React, { PropTypes } from 'react'
+import { analytics } from '../config'
 
-function Html({ title, description, style, script, children }) {
+function Html ({ title, description, style, script, children }) {
   return (
     <html className="no-js" lang="en">
       <head>
@@ -53,7 +53,7 @@ function Html({ title, description, style, script, children }) {
         <script src="/js/progressButton.js" />
       </body>
     </html>
-  );
+  )
 }
 
 Html.propTypes = {
@@ -61,7 +61,7 @@ Html.propTypes = {
   description: PropTypes.string.isRequired,
   style: PropTypes.string.isRequired,
   script: PropTypes.string,
-  children: PropTypes.string,
-};
+  children: PropTypes.string
+}
 
-export default Html;
+export default Html

@@ -13,7 +13,6 @@ import profile from './dashboard/Profile'
 
 export default [{
   path: '/',
-  // keep in mind, routes are evaluated in order
   children: [
     home,
     blank,
@@ -33,7 +32,6 @@ export default [{
     signup,
     login
   ],
-
   async action ({ next, render, context }) {
     const component = await next()
     if (component === undefined) return component
