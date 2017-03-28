@@ -1,16 +1,17 @@
-import React, { Component } from 'react'
-import FullCalendar from 'rc-calendar/lib/FullCalendar'
-import Select from 'rc-select'
-import moment from 'moment'
-import { FormattedMessage } from 'react-intl'
+import React, { Component } from 'react';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import FullCalendar from 'rc-calendar/lib/FullCalendar';
+import Select from 'rc-select';
+import moment from 'moment';
+import { FormattedMessage } from 'react-intl';
 // import $ from 'jquery';
 // import fullcalendar from 'fullcalendar';
-import s from './SidebarWidgets.css'
+import s from './SidebarWidgets.css';
 
-const now = moment()
+const now = moment();
 
 class SidebarCalendar extends Component {
-  componentDidMount () {
+  componentDidMount() {
     // console.log('this.menuCalendar', this.menuCalendar);
     // $(this.menuCalendar).fullcalendar({
     //   contentHeight: 'auto',
@@ -30,7 +31,7 @@ class SidebarCalendar extends Component {
       //   },
       // });
   }
-  render () {
+  render() {
     return (
       <div className={s.calContainer}>
         <div className={s.calHeader}>
@@ -48,8 +49,14 @@ class SidebarCalendar extends Component {
           />
         </div>
       </div>
-    )
+    );
   }
 }
 
-export default SidebarCalendar
+// <div id="sidebarCalendar" ref={(c) => { this.sidebarCalendar = c; }}> SidebarCalendar </div>
+export default withStyles(s)(SidebarCalendar);
+
+
+      // <div className={`calendar-container text-center ${s.calendarContainer}`}>
+      //   <div ref={(c) => { this.menuCalendar = c; }} />
+      // </div>

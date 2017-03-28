@@ -1,25 +1,23 @@
-import React, { Component, PropTypes } from 'react'
-import s from './SidebarWidgets.css'
-import SidebarProfile from './SidebarProfile'
-import SidebarCalendar from './SidebarCalendar'
-import SidebarNewsFeed from './SidebarNewsFeed'
+import React, { Component } from 'react';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import s from './SidebarWidgets.css';
+import SidebarProfile from './SidebarProfile';
+import SidebarCalendar from './SidebarCalendar';
+import SidebarNewsFeed from './SidebarNewsFeed';
 
-class SidebarWidgets extends Component {
-  static propTypes = {
-    profile: PropTypes.object
-  }
 
-  render () {
+class SidebarWidgets extends Component { // eslint-disable-line
+  render() {
     return (
       <div className={`sideWidgets ${s.sideWidgets}`}>
         <div className={`widgets-content ${s.widgetsContent}`}>
-          <SidebarProfile profile={this.props.profile} />
+          <SidebarProfile />
           <SidebarCalendar />
           <SidebarNewsFeed />
         </div>
       </div>
-    )
+    );
   }
 }
 
-export default SidebarWidgets
+export default withStyles(s)(SidebarWidgets);

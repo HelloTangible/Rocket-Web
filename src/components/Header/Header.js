@@ -1,33 +1,43 @@
-import React, { Component, PropTypes } from 'react'
-import withStyles from 'isomorphic-style-loader/lib/withStyles'
-import { FormattedMessage } from 'react-intl'
+import React, { Component, PropTypes } from 'react';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import { FormattedMessage } from 'react-intl';
 import {
   Navbar,
   Nav,
   NavItem,
   NavDropdown,
   MenuItem,
-} from 'react-bootstrap'
-import Link from '../Link'
-import s from './Header.css'
-import history from '../../utils/history'
+} from 'react-bootstrap';
+import Link from '../Link';
+import s from './Header.css';
+import history from '../../core/history';
+import $ from 'jquery';
 
-class TopNav extends Component {
+import AuthService from '../../utils/AuthService'
+
+class TopNav extends Component{
   static contextTypes = {
-    router: PropTypes.object
+    setLang: PropTypes.func.isRequired,
   }
 
-  constructor (props, context) {
-    super(props, context)
-    this.showMenu = this.showMenu.bind(this)
+  static propTypes = {
+    auth: PropTypes.instanceOf(AuthService)
   }
 
-  logout(){
-    this.props.auth.logout()
-    this.context.router.push('/login');
+  constructor(props) {
+    super(props);
+    this.state = {
+      rtlClass: true
+    }
+    this.showMenu = this.showMenu.bind(this);
   }
 
-  render () {
+  // componentWillMount() {
+  //   console.log(this.context);
+  //   // this.context.setTitle(title);
+  // }
+
+  render() {
     return (
       <nav className={"navbar navbar-fixed-top " + s.topNavbar} role="navigation">
         <div className={"navbar-header text-center " + s.navbarHeader}>
@@ -37,7 +47,7 @@ class TopNav extends Component {
                 <span className="icon-bar"></span>
                 <span className="icon-bar"></span>
           </button>
-          <Link to="/" className={`navbar-brand ${s.navbarBrand}`}> Rocket, by Tangible</Link>
+          <Link to="/" className={`navbar-brand ${s.navbarBrand}`}> Rocket by Tangible</Link>
       </div>
 
         <div id="myNavbar" className={"collapse navbar-collapse " + s.navbarCollapse}>
@@ -176,28 +186,76 @@ class TopNav extends Component {
           <ul className={"nav navbar-nav pull-right navbar-right " + s.pullRight + " " + s.ulNavbar}>
 
             <NavDropdown id="dropDown4" className={s.navbarProfile} eventKey={4} title={<span>
-              <img src={this.props.profile.picture} className={" " + s.topnavImg} alt="profile picture" />
-              <span className="hidden-sm">{this.props.profile.name}</span>
+              <img src={require("../../common/images/flat-avatar.png")} className={" " + s.topnavImg} alt="profile picture" />
+              <span className="hidden-sm">Ani Pascal</span>
               </span>} noCaret
             >
-                <MenuItem onClick={this.context.router.push('/dashboard/profile')}>
-                  <FormattedMessage id="profilee" defaultMessage="Profile"/>
+                <MenuItem onClick={(e) => { e.preventDefault(); history.push('/dashboard/profile') }}>
+                  <FormattedMessage
+                    id="profilee"
+                    defaultMessage="Profile"
+                  />
                 </MenuItem>
-                <MenuItem onClick={this.logout.bind(this)}>
-                  <FormattedMessage id="logout" defaultMessage="Logout"/>
+                <MenuItem onClick={(e) => { this.props.auth.logout(); history.push('/login') }}>
+                  <FormattedMessage
+                    id="logout"
+                    defaultMessage="Logout"
+                    />
                 </MenuItem>
             </NavDropdown>
           </ul>
         </div>
+        <ul className={"nav navbar-nav pull-right" + s.ulNavbar + " " + s.hidd}>
+          <NavDropdown id="navDropDown11" eventKey={4} title={<span>
+              <img src={require("../../common/images/flat-avatar.png")} className={`topnav-img ${s.topnavImg}`} alt="" />
+              </span>} noCaret className={`dropdown admin-dropdown ${s.dropdown}`}
+            >
+              <MenuItem onClick={(e) => { e.preventDefault(); history.push('/dashboard/profile') }}>
+                <FormattedMessage
+                  id="profilee"
+                  defaultMessage="Profile"
+                />
+              </MenuItem>
+              <MenuItem onClick={(e) => { e.preventDefault(); history.push('/login') }}>
+                <FormattedMessage
+                  id="logout"
+                  defaultMessage="Logout"
+                  />
+              </MenuItem>
+          </NavDropdown>
+        </ul>
       </nav>
-    )
+    );
   }
 
-  showMenu ()
+  rightToLeft() {
+    this.setState({'rtlClass': !this.state.rtlClass});
+    if (this.state.rtlClass) {
+      $('body').addClass('rtl');
+    } else {
+      $('body').removeClass('rtl');
+    }
+  }
+
+  changeLanguage(e) {
+    // add code related to language change through app store
+    window.localStorage.setItem("language123", e);
+    this.context.setLang(e);
+    // localForage.setItem('lang', e)
+    //   .then((success) => {
+    //     console.log('local storage is set', success);
+    //     this.context.setLang(e);
+    //   })
+    //   .catch((err) => {
+    //     console.log('error while storing lang', err);
+    //   })
+  }
+
+  showMenu()
   {
-    // REPLACE WITH NON-jQuery
-    // $('.dashboard-page').toggleClass('push-right')
+    $('.dashboard-page').toggleClass('push-right');
   }
 }
 
-export default withStyles(s)(TopNav)
+
+export default withStyles(s)(TopNav);

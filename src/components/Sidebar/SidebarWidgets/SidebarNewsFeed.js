@@ -1,9 +1,11 @@
-import React, { Component } from 'react'
-import { FormattedMessage } from 'react-intl'
-import s from './SidebarWidgets.css'
+import React, { Component } from 'react';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import { FormattedMessage } from 'react-intl';
+import s from './SidebarWidgets.css';
+// import Translate from '../../common/Translate';
 
-class SidebarNewsFeed extends Component { 
-  render () {
+class SidebarNewsFeed extends Component { // eslint-disable-line
+  render() {
     return (
       <div className={`news-feed ${s.newsFeed}`}>
         <div className={`feed-header ${s.feedHeader}`}>
@@ -53,8 +55,8 @@ class SidebarNewsFeed extends Component {
           </ul>
         </div>
       </div>
-    )
+    );
   }
 }
 
-export default SidebarNewsFeed
+export default withStyles(s)(SidebarNewsFeed);

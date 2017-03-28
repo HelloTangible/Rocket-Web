@@ -1,71 +1,75 @@
-import React, { Component } from 'react'
-import { FormattedMessage } from 'react-intl'
-import $ from 'jquery'
-import s from './MenuBar.css'
-import Link from '../../Link/Link'
+import React, { Component } from 'react';
+import { FormattedMessage } from 'react-intl';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import $ from 'jquery';
+import s from './MenuBar.css';
+import Link from '../../Link/Link';
+// import Translate from '../../common/Translate';
+
 class MenuBar extends Component {
-  constructor (props) {
-    super(props)
+
+  constructor(props) {
+    super(props);
     this.state = {
-      activeState: 0
-    }
-    this.handleActiveClass = this.handleActiveClass.bind(this)
+      activeState: 0,
+    };
+    this.handleActiveClass = this.handleActiveClass.bind(this);
   }
 
-  componentDidMount () {
+  componentDidMount() {
     // window.scrollTo(0, 0);
     // setTimeout(() => {
     //   window.scrollTo(0, 0);
     //   console.log("insdie scroll");
     // }, 1000);
-    const that = this
-    const loc = window.location.href
-    const pageIndex = loc.indexOf('/dashboard/')
-    let str = null
+    const that = this;
+    const loc = window.location.href;
+    const pageIndex = loc.indexOf('/dashboard/');
+    let str = null;
     if (pageIndex !== -1) {
-      str = loc.substr(pageIndex + 11)
+      str = loc.substr(pageIndex + 11);
       if (str === 'inbox' || str === 'compose') {
-        str = 'mail'
+        str = 'mail';
       } else if (str === 'elements' || str === 'components') {
-        str = 'form'
+        str = 'form';
       } else if (str === 'buttons' || str === 'alerts' || str === 'dropdowns' || str === 'icons' || str === 'panels' || str === 'progressbars' || str === 'paginations' || str === 'other-elements') {
-        str = 'userInterface'
+        str = 'userInterface';
       } else if (str === 'chartjs' || str === 'morrisjs') {
-        str = 'charts'
+        str = 'charts';
       } else if (str === 'blank') {
-        str = 'miscellaneous'
+        str = 'miscellaneous';
       }
     }
     switch (str) {
-      case 'home': that.setState({ activeState: 0 })
-        break
-      case 'typography': that.setState({ activeState: 1 })
-        break
-      case 'grid': that.setState({ activeState: 2 })
-        break
-      case 'table': that.setState({ activeState: 3 })
-        break
-      case 'form': that.setState({ activeState: 4 })
-        break
-      case 'userInterface': that.setState({ activeState: 5 })
-        break
-      case 'chart': that.setState({ activeState: 6 })
-        break
-      case 'calendar': that.setState({ activeState: 7 })
-        break
-      case 'mail': that.setState({ activeState: 8 })
-        break
-      case 'invoice': that.setState({ activeState: 9 })
-        break
-      case 'docs': that.setState({ activeState: 10 })
-        break
-      case 'miscellaneous': that.setState({ activeState: 11 })
-        break
-      default: that.setState({ activeState: 0 })
+      case 'home': that.setState({ activeState: 0 });
+        break;
+      case 'typography': that.setState({ activeState: 1 });
+        break;
+      case 'grid': that.setState({ activeState: 2 });
+        break;
+      case 'table': that.setState({ activeState: 3 });
+        break;
+      case 'form': that.setState({ activeState: 4 });
+        break;
+      case 'userInterface': that.setState({ activeState: 5 });
+        break;
+      case 'chart': that.setState({ activeState: 6 });
+        break;
+      case 'calendar': that.setState({ activeState: 7 });
+        break;
+      case 'mail': that.setState({ activeState: 8 });
+        break;
+      case 'invoice': that.setState({ activeState: 9 });
+        break;
+      case 'docs': that.setState({ activeState: 10 });
+        break;
+      case 'miscellaneous': that.setState({ activeState: 11 });
+        break;
+      default: that.setState({ activeState: 0 });
     }
   }
 
-  handleActiveClass (name) {
+  handleActiveClass(name) {
     switch (name) {
       case 'home': this.setState({ activeState: 0 });
         break;
@@ -94,10 +98,10 @@ class MenuBar extends Component {
       default: this.setState({ activeState: 0 });
     }
   }
-  hideMenu () {
-    $('.dashboard-page').toggleClass('push-right')
+  hideMenu() {
+    $('.dashboard-page').toggleClass('push-right');
   }
-  render () {
+  render() {
     return (
       <div className={`side-menu ${s.sideMenu}`}>
         <div className={`menu-body ${s.menuBody}`}>
@@ -419,8 +423,8 @@ class MenuBar extends Component {
           </ul>
         </div>
       </div>
-    )
+    );
   }
 }
 
-export default MenuBar
+export default withStyles(s)(MenuBar);

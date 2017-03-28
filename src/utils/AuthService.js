@@ -1,77 +1,82 @@
+/* global localStorage, location, __PARSED__ */
+import Auth0 from 'auth0-js'
+import Axios from 'axios'
 import { EventEmitter } from 'events'
 import { isTokenExpired } from './jwtHelper'
-import Auth0Lock from 'auth0-lock'
-import { browserHistory } from 'react-router'
-import Axios from 'axios'
-
-const localStorage = window.localStorage
+const envGlobal = __PARSED__
 
 export default class AuthService extends EventEmitter {
   constructor (clientId, domain) {
     super()
     // Configure Auth0
-    this.lock = new Auth0Lock(clientId, domain, {
-      auth: {
-        redirectUrl: `${window.location.origin}/login`,
-        responseType: 'token'
-      }
+    this.auth0 = new Auth0.WebAuth({
+      domain: domain,
+      clientID: clientId,
+      redirectUri: `http://${envGlobal.ROOT_URL}/`,
+      responseType: 'token'
     })
-    // Add callback for lock `authenticated` event
-    this.lock.on('authenticated', this._doAuthentication.bind(this))
-    // Add callback for lock `authorization_error` event
-    this.lock.on('authorization_error', this._authorizationError.bind(this))
-    // binds login functions to keep this context
-    this.login = this.login.bind(this)
-  }
-
-  _doAuthentication (authResult) {
-    // Saves the user token
-    this.setToken(authResult.idToken)
-    // navigate to the home route
-    browserHistory.replace('/home')
-    // Async loads the user profile data
-    this.lock.getProfile(authResult.idToken, (error, profile) => {
-      if (error) {
-        console.log('Error loading the Profile', error)
-      } else {
-        this.setProfile(profile)
-        this.saveIfNew(profile)
-      }
-    })
-  }
-
-  _authorizationError (error) {
-    // Unexpected authentication error
-    console.log('Authentication Error', error)
   }
 
   login () {
-    // Call the show method to display the widget.
-    this.lock.show()
+    this.auth0.authorize()
   }
 
   loggedIn () {
-    // Checks if there is a saved token and it's still valid
-    const token = this.getToken()
-    return !!token && !isTokenExpired(token)
+    if (typeof location === 'undefined') return
+
+    if (location.hash) {
+      this.auth0.parseHash(location.hash, (err, result) => {
+        if (err) return console.log(`Authentication Error: ${err}`)
+
+        this.saveAuth(result)
+      })
+    } else {
+      const token = this.getToken()
+
+      if (!token || isTokenExpired(token)) {
+        console.log('Token expired. Renewing...')
+        this.auth0.renewAuth({
+          redirectUri: `http://${envGlobal.ROOT_URL}/`,
+          usePostMessage: true
+        }, (err, result) => {
+          if (err) return console.log(`Authentication Error: ${err}`)
+
+          console.log(result)
+
+          this.saveAuth(result)
+        })
+      }
+    }
+  }
+
+  saveAuth (result) {
+    // Saves the user token
+    this.setToken(result.idToken)
+
+    // Async loads the user profile data
+    this.auth0.client.userInfo(result.accessToken, (err, profile) => {
+      if (err) return console.log(`Error loading the Profile: ${err}`)
+
+      console.log(profile)
+      this.setProfile(profile)
+      this.saveIfNew(profile)
+    })
   }
 
   setProfile (profile) {
-    // Saves profile data to localStorage
     localStorage.setItem('profile', JSON.stringify(profile))
     // Triggers profile_updated event to update the UI
     this.emit('profile_updated', profile)
   }
 
   getProfile () {
-    // Retrieves the profile data from localStorage
     const profile = localStorage.getItem('profile')
     return profile ? JSON.parse(localStorage.profile) : {}
   }
 
   saveIfNew (profile) {
     // If this is a new user, save them to our internal DB
-    Axios.get(`http://${__ROCKET_API_HOST__}/api/users/${profile.user_id}`).then((res) => {
+    Axios.get(`http://${envGlobal.ROCKET_API_HOST}/api/users/${profile.user_id}`).then((res) => {
       console.log(res)
     }).catch(() => {
       let user = {
@@ -82,22 +87,19 @@ export default class AuthService extends EventEmitter {
         name: profile.name
       }
 
-      Axios.post(`http://${__ROCKET_API_HOST__}/api/users`, user)
+      Axios.post(`http://${envGlobal.ROCKET_API_HOST}/api/users`, user)
     })
   }
 
   setToken (idToken) {
-    // Saves user token to localStorage
     localStorage.setItem('id_token', idToken)
   }
 
   getToken () {
-    // Retrieves the user token from localStorage
     return localStorage.getItem('id_token')
   }
 
   logout () {
-    // Clear user token and profile data from localStorage
     localStorage.removeItem('id_token')
     localStorage.removeItem('profile')
   }
