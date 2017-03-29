@@ -22,16 +22,15 @@ class TopNav extends Component{
 
   constructor (props) {
     super(props)
-    this.showMenu = this.showMenu.bind(this);
-  }
 
-  componentWillMount() {
     const prof = this.props.auth.getProfile()
 
     this.state = {
       rtlClass: true,
       profile: prof ? prof : {} 
     }
+
+    this.showMenu = this.showMenu.bind(this);
   }
 
   render() {

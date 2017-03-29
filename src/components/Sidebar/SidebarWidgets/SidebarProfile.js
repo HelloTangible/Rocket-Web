@@ -10,7 +10,9 @@ class SidebarProfile extends Component {
     auth: PropTypes.instanceOf(AuthService)
   }
 
-  componentWillMount() {
+  constructor(props) {
+    super(props)
+    
     const prof = this.props.auth.getProfile()
 
     this.state = {

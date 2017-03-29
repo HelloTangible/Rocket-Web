@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import { Panel } from 'react-bootstrap';
 import s from './Profile.css';
-// import Link from '../../../components/Link';
 
 import cover from '../../../common/images/profile-cover.jpg';
 import flatAvatart from '../../../common/images/flat-avatar.png';
@@ -17,11 +16,13 @@ class Profile extends Component {
   };
 
   componentWillMount() {
-    this.context.setTitle(title);
+    this.context.setTitle(title)
   
     this.state = {
       profile: this.context.getProfile()
     }
+
+
   }
 
   render() {
