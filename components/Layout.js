@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react'
 import Router from 'next/router'
 import AuthService from '../utils/AuthService'
 import Header from './Header'
+import LeftNav from './LeftNav'
 
 class Layout extends Component {
   static propTypes = {
@@ -25,7 +26,9 @@ class Layout extends Component {
     return (
       <div >
         <Header />
-        {this.props.children}
+        <LeftNav>
+          {this.props.children}
+        </LeftNav>
       </div>
     )
   }
