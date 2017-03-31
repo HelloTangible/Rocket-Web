@@ -22,9 +22,9 @@ export default class AuthService {
 
       this.setProfile(profile)
       this.saveIfNew(profile)
-    })
 
-    Router.push('/')
+      Router.push('/')
+    })
   }
 
   getLock () {
@@ -46,8 +46,6 @@ export default class AuthService {
   }
 
   getProfile () {
-    if (typeof localStorage === 'undefined') return
-
     const profile = localStorage.getItem('profile')
     return profile ? JSON.parse(localStorage.profile) : {}
   }

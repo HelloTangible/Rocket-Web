@@ -4,12 +4,6 @@ import Router from 'next/router'
 import AuthService from '../utils/AuthService'
 import Header from './Header'
 
-const layoutStyle = {
-  margin: 20,
-  padding: 20,
-  border: '1px solid #DDD'
-}
-
 class Layout extends Component {
   static propTypes = {
     children: PropTypes.object
@@ -29,7 +23,7 @@ class Layout extends Component {
 
   render () {
     return (
-      <div style={layoutStyle}>
+      <div >
         <Header />
         {this.props.children}
       </div>
