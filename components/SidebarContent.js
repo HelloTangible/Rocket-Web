@@ -1,15 +1,22 @@
 import React from 'react'
 import { NavItem } from 'rebass'
-import RocketIcon from 'react-icons/lib/fa/rocket'
-import Router from 'next/router'
+import { FaTasks, FaCogs, FaRefresh } from 'react-icons/lib/fa'
 
 export default (
-  <NavItem href='/'>
+  <div>
     <style jsx>{`
       .icon {
         font-size: .5em;
       }
     `}</style>
-    <RocketIcon className='icon' />
-  </NavItem>
+    <NavItem href='/'>
+      <FaTasks className='icon' />
+    </NavItem>
+    <NavItem href='/'>
+      <FaRefresh className='icon' />
+    </NavItem>
+    <NavItem href='/'>
+      <FaCogs className='icon' />
+    </NavItem>
+  </div>
 )
