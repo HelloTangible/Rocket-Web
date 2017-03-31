@@ -44,5 +44,7 @@ export default class AuthService {
 
   logout () {
     localStorage.removeItem('id_token')
+    
+    Router.push('/login')
   }
 }

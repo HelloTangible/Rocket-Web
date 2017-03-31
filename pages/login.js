@@ -1,3 +1,4 @@
+/* global AUTH0_CLIENT_ID, AUTH0_DOMAIN */
 import React, { Component } from 'react'
 import AuthService from '../utils/AuthService'
 
@@ -8,8 +9,7 @@ class Login extends Component {
   }
 
   componentDidMount () {
-    // const auth = new AuthService(__AUTH0_CLIENT_ID__, __AUTH0_DOMAIN__)
-    this.auth = new AuthService('pkZL0hqlU45SEnQ1LiTakZiVkkVyTYKd', 'hellotangible.auth0.com')
+    this.auth = new AuthService(AUTH0_CLIENT_ID, AUTH0_DOMAIN)
     this.setState({ loggedIn: this.auth.loggedIn() })
     // instance of Lock
     this.lock = this.auth.getLock()
@@ -20,7 +20,6 @@ class Login extends Component {
   }
 
   login () {
-    console.log('here')
     this.auth.login()
   }
 
