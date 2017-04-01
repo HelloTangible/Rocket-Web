@@ -26,6 +26,7 @@
     "react-geomicons": "^2.1.0",
     "react-icons": "^2.2.3",
     "react-router": "^4.0.0",
+    "react-sidebar": "^2.3.0",
     "rebass": "^0.3.4",
     "reflexbox": "^2.2.3"
   },

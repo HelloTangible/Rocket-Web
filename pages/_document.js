@@ -5,7 +5,7 @@ import flush from 'styled-jsx/server'
 const layoutStyle = {
   fontFamily: 'Open Sans, sans-serif',
   color: '#111',
-  backgroundColor: '#fff',
+  backgroundColor: '#ecf0f1',
   lineHeight: '1.5',
   margin: '0'
 }
