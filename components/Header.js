@@ -47,15 +47,15 @@ class Header extends Component {
 
   render () {
     return (
-      <Toolbar style={{ height: '4.5em', background: '#3ca2e0' }}>
+      <Toolbar style={{ height: '4.5em', background: '#3ca2e0', boxShadow: '#999 2px 2px 4px' }}>
         <style jsx global>{`
-          .icon {
-            font-size: 4em;
+          .header-icon {
+            font-size: 3.5em;
             padding-right: 10px;
           }
         `}</style>
         <NavItem href='/'>
-          <RocketIcon className='icon' />
+          <RocketIcon className='header-icon' />
           <h1>Rocket, by Tangible</h1>
         </NavItem>
         <Space auto x={1} />

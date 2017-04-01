@@ -20,6 +20,9 @@ class LeftNav extends Component {
       background: '#82ca9d',
       borderTop: '#3dabf0',
       width: '50px'
+    },
+    content: {
+      marginLeft: '1em'
     }
   }
 
