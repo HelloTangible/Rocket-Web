@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavItem, Tooltip } from 'rebass'
+import { NavItem } from 'rebass'
 import { FaTasks } from 'react-icons/lib/fa'
 import { MdCloud, MdCreditCard, MdPerson, MdPhonelinkSetup, MdTimeline } from 'react-icons/lib/md'
 

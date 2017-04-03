@@ -4,7 +4,7 @@ const Sidebar = require('react-sidebar').default
 
 class LeftNav extends Component {
   static propTypes = {
-    children: PropTypes.object
+    children: PropTypes.array || PropTypes.object
   }
 
   sidebarStyles = {

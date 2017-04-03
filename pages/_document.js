@@ -23,6 +23,7 @@ export default class MyDocument extends Document {
         <Head>
           <script src='https://cdn.auth0.com/js/lock/10.5/lock.min.js'></script>
           <style>{`body { margin: 0 } /* custom! */`}</style>
+          <link href='static/styles/globalStyles.css' rel='stylesheet' />
         </Head>
         <body>
           <style jsx global>{`

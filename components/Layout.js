@@ -7,7 +7,7 @@ import LeftNav from './LeftNav'
 
 class Layout extends Component {
   static propTypes = {
-    children: PropTypes.object
+    children: PropTypes.array || PropTypes.object
   }
 
   constructor (props) {
