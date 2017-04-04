@@ -2,12 +2,14 @@
 import React, { Component, PropTypes } from 'react'
 import Router from 'next/router'
 import AuthService from '../utils/AuthService'
+import Head from 'next/head'
 import Header from './Header'
+import TopNav from './TopNav'
 import LeftNav from './LeftNav'
 
 class Layout extends Component {
   static propTypes = {
-    children: PropTypes.array || PropTypes.object
+    children: PropTypes.oneOfType([PropTypes.array, PropTypes.object])
   }
 
   constructor (props) {
@@ -24,8 +26,9 @@ class Layout extends Component {
 
   render () {
     return (
-      <div >
+      <div>
         <Header />
+        <TopNav />
         <LeftNav>
           {this.props.children}
         </LeftNav>
