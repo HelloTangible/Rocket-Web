@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import Router from 'next/router'
 import { Toolbar, Space, NavItem, Avatar, Arrow, Dropdown, DropdownMenu, Button } from 'rebass'
 import RocketIcon from 'react-icons/lib/fa/rocket'
-import AuthService from '../utils/AuthService'
+import AuthService from '../../utils/AuthService'
 
 
 class TopNav extends Component {

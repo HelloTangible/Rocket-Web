@@ -1,9 +1,6 @@
 import React, { Component, PropTypes } from 'react'
-import SensorList from './sensors/SensorList'
+import SensorList from '../sensors/SensorList'
 import { Table, Panel, PanelHeader, PanelFooter, Button, Overlay, Space, Close, Input } from 'rebass'
-import MdRemoveCircle from 'react-icons/lib/md/remove-circle'
-
-const deleteButton = <MdRemoveCircle className={'delete'} />
 
 class AddDevice extends Component {
   static propTypes = {
@@ -21,6 +18,7 @@ class AddDevice extends Component {
     }
     this.addDevice = this.addDevice.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.addSensorToDevice = this.addSensorToDevice.bind(this)
   }
 
   handleChange(event) {
@@ -37,6 +35,10 @@ class AddDevice extends Component {
     return null
   }
 
+  addSensorToDevice (sensor) {
+
+  }
+
   render () {
     return (
       <Overlay open={this.props.overlayOpen} style={{ width: '40rem' }}>
@@ -50,7 +52,7 @@ class AddDevice extends Component {
             <Input name='deviceName' label='Name' 
               value={this.state.deviceName}
               onChange={this.handleChange} />
-            <SensorList />
+            <SensorList addToDevice={this.addSensorToDevice} />
           </form>
           <PanelFooter theme='default'>
             <Button onClick={this.addDevice}>Add</Button>

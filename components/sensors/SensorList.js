@@ -1,27 +1,18 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import AddSensor from './AddSensor'
 import { Table, Panel, PanelHeader } from 'rebass'
 import MdRemoveCircle from 'react-icons/lib/md/remove-circle'
 
-const deleteButton = <MdRemoveCircle className={'delete'} />
-
 class SensorList extends Component {
+  static propTypes = {
+    addToDevice: PropTypes.func
+  }
+  
   constructor (props) {
     super(props)
 
     this.state = {
-      sensors: [
-        [
-          'Temperature',
-          'Farenheit',
-          deleteButton
-        ],
-        [
-          'Humidity',
-          'Bar',
-          deleteButton
-        ]
-      ]
+      sensors: []
     }
 
     this.saveSensor = this.saveSensor.bind(this)

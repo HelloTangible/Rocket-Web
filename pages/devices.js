@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import Layout from '../components/Layout'
-import DeviceList from '../components/DeviceList'
-import AddDevice from '../components/AddDevice'
+import Layout from '../components/main/Layout'
+import DeviceList from '../components/devices/DeviceList'
+import AddDevice from '../components/devices/AddDevice'
 
 class Devices extends Component {
   constructor (props) {

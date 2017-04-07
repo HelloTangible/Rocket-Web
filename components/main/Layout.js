@@ -1,7 +1,7 @@
 /* global AUTH0_CLIENT_ID, AUTH0_DOMAIN */
 import React, { Component, PropTypes } from 'react'
 import Router from 'next/router'
-import AuthService from '../utils/AuthService'
+import AuthService from '../../utils/AuthService'
 import Head from 'next/head'
 import Header from './Header'
 import TopNav from './TopNav'
