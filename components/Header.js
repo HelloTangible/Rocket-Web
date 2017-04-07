@@ -18,6 +18,11 @@ export default () => (
         h1 {
           font-size: 1.5em;
         }
+
+        .delete {
+          color: red;
+          font-size: 1.5em;
+        }
         
         .Button, .PanelHeader, .Toolbar {
           background-color: #3ca2e0 !important;

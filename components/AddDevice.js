@@ -1,5 +1,9 @@
 import React, { Component, PropTypes } from 'react'
+import SensorList from './sensors/SensorList'
 import { Table, Panel, PanelHeader, PanelFooter, Button, Overlay, Space, Close, Input } from 'rebass'
+import MdRemoveCircle from 'react-icons/lib/md/remove-circle'
+
+const deleteButton = <MdRemoveCircle className={'delete'} />
 
 class AddDevice extends Component {
   static propTypes = {
@@ -13,24 +17,24 @@ class AddDevice extends Component {
 
     this.state = {
       deviceName: '',
-      sensors: [],
-      actuators: []
+      sensors: []
     }
     this.addDevice = this.addDevice.bind(this)
-    this.addSensor = this.addSensor.bind(this)
-    this.addActuator = this.addActuator.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+  }
+
+  handleChange(event) {
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: value
+    });
   }
 
   addDevice () {
     return null
-  }
-
-  addSensor () {
-
-  }
-
-  addActuator () {
-
   }
 
   render () {
@@ -43,46 +47,10 @@ class AddDevice extends Component {
             <Close onClick={this.props.closeDeviceModal} />
           </PanelHeader>
           <form>
-            <Input name='name' label='Name' value={this.state.deviceName} />
-            <Panel>
-              <PanelHeader>
-                Sensors
-              </PanelHeader>
-              <div>
-                <Table
-                  data={[
-                    [
-                      'Temperature',
-                      'Farenheit'
-                    ],
-                    [
-                      'Humidity',
-                      'Bar'
-                    ],
-                    [
-                      'Rainfall',
-                      'Inches'
-                    ]
-                  ]}
-                  headings={[
-                    'Name',
-                    'Type'
-                  ]}
-                />
-              </div>
-              <PanelFooter theme='default'>
-                <Button onClick={this.addSensor}>Add</Button>
-              </PanelFooter>
-            </Panel>
-            <Panel>
-              <PanelHeader>
-                Actuators
-              </PanelHeader>
-              <div>None</div>
-              <PanelFooter theme='default'>
-                <Button onClick={this.addActuator}>Add</Button>
-              </PanelFooter>
-            </Panel>
+            <Input name='deviceName' label='Name' 
+              value={this.state.deviceName}
+              onChange={this.handleChange} />
+            <SensorList />
           </form>
           <PanelFooter theme='default'>
             <Button onClick={this.addDevice}>Add</Button>
