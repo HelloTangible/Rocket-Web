@@ -18,7 +18,7 @@ class AddDevice extends Component {
     }
     this.addDevice = this.addDevice.bind(this)
     this.handleChange = this.handleChange.bind(this)
-    this.addSensorToDevice = this.addSensorToDevice.bind(this)
+    this.updateSensors = this.updateSensors.bind(this)
   }
 
   handleChange(event) {
@@ -32,11 +32,11 @@ class AddDevice extends Component {
   }
 
   addDevice () {
-    return null
+    this.props.saveDevice(this.state)
   }
 
-  addSensorToDevice (sensor) {
-
+  updateSensors (sensors) {
+    this.setState({ sensors: sensors })
   }
 
   render () {
@@ -52,7 +52,7 @@ class AddDevice extends Component {
             <Input name='deviceName' label='Name' 
               value={this.state.deviceName}
               onChange={this.handleChange} />
-            <SensorList addToDevice={this.addSensorToDevice} />
+            <SensorList updateSensors={this.updateSensors} sensors={this.state.sensors} />
           </form>
           <PanelFooter theme='default'>
             <Button onClick={this.addDevice}>Add</Button>

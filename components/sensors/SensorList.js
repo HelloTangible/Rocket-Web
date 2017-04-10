@@ -1,48 +1,41 @@
 import React, { Component, PropTypes } from 'react'
-import AddSensor from './AddSensor'
+import NewSensor from './NewSensor'
 import { Table, Panel, PanelHeader } from 'rebass'
 import MdRemoveCircle from 'react-icons/lib/md/remove-circle'
 
 class SensorList extends Component {
   static propTypes = {
-    addToDevice: PropTypes.func
+    updateSensors: PropTypes.func,
+    sensors: PropTypes.array
   }
   
   constructor (props) {
     super(props)
 
-    this.state = {
-      sensors: []
-    }
-
     this.saveSensor = this.saveSensor.bind(this)
     this.removeSensor = this.removeSensor.bind(this)
   }
 
-  addDevice () {
-    return null
-  }
-
   removeSensor (sensorName) {
-    let sensors = this.state.sensors.filter((sensor) => {
+    let sensors = this.props.sensors.filter((sensor) => {
       return sensor[0] !== sensorName
     })
 
-    this.setState({ sensors: sensors })
+    this.props.updateSensors(sensors)
   }
 
   saveSensor (sensor) {
-    const sensors = this.state.sensors
+    const sensors = this.props.sensors
 
     // Add the delete button
     sensor.push(<MdRemoveCircle
       className={'delete'}
       onClick={() => this.removeSensor(sensor[0])} />)
 
-    this.setState({ sensors: [
+    this.props.updateSensors([
       ...sensors,
       sensor
-    ]})
+    ])
   }
 
   render () {
@@ -53,7 +46,7 @@ class SensorList extends Component {
         </PanelHeader>
         <div>
           <Table
-            data={this.state.sensors}
+            data={this.props.sensors}
             headings={[
               'Name',
               'Type',
@@ -61,7 +54,7 @@ class SensorList extends Component {
             ]}
           />
         </div>
-        <AddSensor addSensor={this.saveSensor} />
+        <NewSensor addSensor={this.saveSensor} />
       </Panel>
     )
   }

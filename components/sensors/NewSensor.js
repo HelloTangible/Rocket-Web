@@ -39,7 +39,7 @@ const sensorTypeOptions = [
   }
 ]
 
-class AddSensor extends Component {
+class NewSensor extends Component {
   static propTypes = {
     addSensor: PropTypes.func
   }
@@ -102,4 +102,4 @@ class AddSensor extends Component {
   }
 }
 
-export default AddSensor
+export default NewSensor

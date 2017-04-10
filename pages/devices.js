@@ -8,7 +8,24 @@ class Devices extends Component {
     super(props)
 
     this.state = {
-      openModal: false
+      openModal: false,
+      devices: [
+        [
+          'Particle Photon',
+          [['Temp', 3], ['Humidity', 2], ['Rainfall', 4]],
+          [0, 1, 3]
+        ],
+        [
+          'Phillips Hue Bulb',
+          [['Temp', 3], ['Humidity', 2]],
+          []
+        ],
+        [
+          'SparkFun MAX',
+          [['Temp', 3]],
+          [0, 1, 2, 3]
+        ]
+      ]
     }
     this.toggleDeviceModal = this.toggleDeviceModal.bind(this)
     this.saveDevice = this.saveDevice.bind(this)
@@ -20,15 +37,22 @@ class Devices extends Component {
     }))
   }
 
-  saveDevice () {
-    return null
+  saveDevice (device) {
+    let devices = this.state.devices
+
+    this.setState({ devices: [
+      device,
+      ...devices
+    ] })
+
+    this.toggleDeviceModal()
   }
 
   render () {
     return (
       <div>
         <Layout>
-          <DeviceList openDeviceModal={this.toggleDeviceModal} />
+          <DeviceList openDeviceModal={this.toggleDeviceModal} devices={this.state.devices} />
           <AddDevice saveDevice={this.saveDevice} overlayOpen={this.state.openModal} closeDeviceModal={this.toggleDeviceModal} />
         </Layout>
       </div>

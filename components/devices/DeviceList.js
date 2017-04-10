@@ -1,9 +1,18 @@
 import React, { Component, PropTypes } from 'react'
 import { Panel, PanelHeader, Table, PanelFooter, Button } from 'rebass'
 
+var deviceTable = []
+
 class DeviceList extends Component {
   static propTypes = {
-    openDeviceModal: PropTypes.func
+    openDeviceModal: PropTypes.func,
+    devices: PropTypes.array
+  }
+
+  componentWillMount () {
+    const countOrReturn = item => typeof item === 'object'? item.length : item
+    
+    deviceTable = this.props.devices.map( fields => fields.map ( countOrReturn ))
   }
   
   render () {
@@ -13,23 +22,7 @@ class DeviceList extends Component {
           Device List
         </PanelHeader>
         <Table
-          data={[
-            [
-              'Particle Photon',
-              '3',
-              '5'
-            ],
-            [
-              'Phillips Hue Bulb',
-              '3',
-              '0'
-            ],
-            [
-              'SparkFun MAX',
-              '1',
-              '4'
-            ]
-          ]}
+          data={deviceTable}
           headings={[
             'Name',
             'Sensors',
