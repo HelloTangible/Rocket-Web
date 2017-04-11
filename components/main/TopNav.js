@@ -3,10 +3,10 @@ import React, { Component } from 'react'
 import Router from 'next/router'
 import { Toolbar, Space, NavItem, Avatar, Arrow, Dropdown, DropdownMenu, Button } from 'rebass'
 import RocketIcon from 'react-icons/lib/fa/rocket'
-import AuthService from '../utils/AuthService'
+import AuthService from '../../utils/AuthService'
 
 
-class Header extends Component {
+class TopNav extends Component {
   constructor (props) {
     super(props)
 
@@ -19,6 +19,7 @@ class Header extends Component {
     this.profile = this.profile.bind(this)
     this.toggle = this.toggle.bind(this)
   }
+
   componentDidMount () {
     this.auth = new AuthService(AUTH0_CLIENT_ID, AUTH0_DOMAIN)
 
@@ -47,7 +48,7 @@ class Header extends Component {
 
   render () {
     return (
-      <Toolbar style={{ height: '4.5em', background: '#3ca2e0', boxShadow: '#999 2px 2px 4px' }}>
+      <Toolbar style={{ height: '4.5em', boxShadow: '#999 2px 2px 4px' }}>
         <style jsx global>{`
           .header-icon {
             font-size: 3.5em;
@@ -65,7 +66,7 @@ class Header extends Component {
           src={this.state.profilePic}
         />
         <Dropdown>
-          <Button style={{ fontSize: '1em', background: '#3ca2e0' }} onClick={this.toggle('dropdownOpen')}>
+          <Button style={{ fontSize: '1em' }} onClick={this.toggle('dropdownOpen')}>
             <div className='profilename'>{this.state.username}<Arrow direction='down' /></div>
           </Button>
           <DropdownMenu open={this.state.dropdownOpen} onDismiss={this.toggle('dropdownOpen')}>
@@ -78,4 +79,4 @@ class Header extends Component {
   }
 }
 
-export default Header
+export default TopNav

@@ -6,6 +6,8 @@ class Login extends Component {
   constructor (props) {
     super(props)
     this.state = { loggedIn: false }
+
+    this.login = this.login.bind(this)
   }
 
   componentDidMount () {
@@ -79,7 +81,7 @@ class Login extends Component {
             <button
               type='submit'
               className='btn'
-              onClick={this.login.bind(this)}
+              onClick={this.login}
               data-style='fill' data-horizontal>Log in</button>
           </div>
         </div>
