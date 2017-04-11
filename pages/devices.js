@@ -10,21 +10,21 @@ class Devices extends Component {
     this.state = {
       openModal: false,
       devices: [
-        [
-          'Particle Photon',
-          [['Temp', 3], ['Humidity', 2], ['Rainfall', 4]],
-          [0, 1, 3]
-        ],
-        [
-          'Phillips Hue Bulb',
-          [['Temp', 3], ['Humidity', 2]],
-          []
-        ],
-        [
-          'SparkFun MAX',
-          [['Temp', 3]],
-          [0, 1, 2, 3]
-        ]
+        {
+          name: 'Particle Photon',
+          sensors: [['Temp', 3], ['Humidity', 2], ['Rainfall', 4]],
+          simulations: [0, 1, 3]
+        },
+        {
+          name: 'Phillips Hue Bulb',
+          sensors: [['Temp', 3], ['Humidity', 2]],
+          simulations: []
+        },
+        {
+          name: 'SparkFun MAX',
+          sensors: [['Temp', 3]],
+          simulations: [0, 1, 2, 3]
+        }
       ]
     }
     this.toggleDeviceModal = this.toggleDeviceModal.bind(this)

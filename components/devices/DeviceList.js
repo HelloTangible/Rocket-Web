@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react'
+import _ from 'lodash'
 import { Panel, PanelHeader, Table, PanelFooter, Button } from 'rebass'
 
 var deviceTable = []
@@ -8,14 +9,11 @@ class DeviceList extends Component {
     openDeviceModal: PropTypes.func,
     devices: PropTypes.array
   }
-
-  componentWillMount () {
-    const countOrReturn = item => typeof item === 'object'? item.length : item
-    
-    deviceTable = this.props.devices.map( fields => fields.map ( countOrReturn ))
-  }
   
   render () {
+    const countOrReturn = item => typeof item === 'object'? item.length : item
+    deviceTable = _.map(this.props.devices, fields => _.map (fields, countOrReturn))
+    
     return (
       <Panel theme='info' style={{ marginTop: '25px', marginRight: '1em', borderColor: '#3ca2e0' }}>
         <PanelHeader inverted>
