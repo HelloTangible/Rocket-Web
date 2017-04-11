@@ -14,7 +14,8 @@ class AddDevice extends Component {
 
     this.state = {
       deviceName: '',
-      sensors: []
+      sensors: [],
+      actuators: []
     }
     this.addDevice = this.addDevice.bind(this)
     this.handleChange = this.handleChange.bind(this)

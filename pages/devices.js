@@ -41,9 +41,11 @@ class Devices extends Component {
     let devices = this.state.devices
 
     this.setState({ devices: [
-      device,
-      ...devices
+      ...devices,
+      device
     ] })
+
+    // TODO Save to API
 
     this.toggleDeviceModal()
   }
