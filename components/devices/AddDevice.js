@@ -1,10 +1,12 @@
 import React, { Component, PropTypes } from 'react'
+import _ from 'lodash'
 import SensorList from '../sensors/SensorList'
 import { Table, Panel, PanelHeader, PanelFooter, Button, Overlay, Space, Close, Input } from 'rebass'
 
 class AddDevice extends Component {
   static propTypes = {
     overlayOpen: PropTypes.bool,
+    device: PropTypes.object,
     saveDevice: PropTypes.func,
     closeDeviceModal: PropTypes.func
   }
@@ -40,6 +42,15 @@ class AddDevice extends Component {
     this.setState({ sensors: sensors })
   }
 
+  componentWillReceiveProps(nextProps) {
+    if(!_.isEmpty(nextProps.device)) {
+      this.setState({ 
+        deviceName: nextProps.device.name,
+        sensors: nextProps.device.sensors
+      })
+    }
+  }
+
   render () {
     return (
       <Overlay open={this.props.overlayOpen} style={{ width: '40rem' }}>
@@ -56,7 +67,7 @@ class AddDevice extends Component {
             <SensorList updateSensors={this.updateSensors} sensors={this.state.sensors} />
           </form>
           <PanelFooter theme='default'>
-            <Button onClick={this.addDevice}>Add</Button>
+            <Button onClick={this.addDevice}>Save</Button>
           </PanelFooter>
         </Panel>
       </Overlay>

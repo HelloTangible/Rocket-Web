@@ -16,6 +16,12 @@ class SensorList extends Component {
     this.removeSensor = this.removeSensor.bind(this)
   }
 
+  componentWillReceiveProps (nextProps) {
+    if (this.props.sensors.length === 0 && nextProps.sensors.length > 0) {
+      nextProps.sensors.forEach((sensor) => this.addDeleteButton(sensor))
+    }
+  }
+
   removeSensor (sensorName) {
     let sensors = this.props.sensors.filter((sensor) => {
       return sensor[0] !== sensorName
@@ -28,14 +34,18 @@ class SensorList extends Component {
     const sensors = this.props.sensors
 
     // Add the delete button
-    sensor.push(<MdRemoveCircle
-      className={'delete'}
-      onClick={() => this.removeSensor(sensor[0])} />)
+    this.addDeleteButton(sensor)
 
     this.props.updateSensors([
       ...sensors,
       sensor
     ])
+  }
+
+  addDeleteButton (sensor) {
+    sensor.push(<MdRemoveCircle
+      className={'delete'}
+      onClick={() => this.removeSensor(sensor[0])} />)
   }
 
   render () {
